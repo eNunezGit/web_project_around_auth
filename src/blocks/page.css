@@ -1,0 +1,52 @@
+html, body, #root {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+#root {
+    color: white;
+    background-color: black;
+    font-family: "Inter-Regular", sans-serif;
+    font-size: 1rem;
+}
+
+.page__content {
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    align-items: center;
+}
+
+.page__section {
+    width: 70%;
+    height: auto;
+    margin-top: 5vh;
+}
+
+img {
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+button {
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+button:not(:disabled):hover {
+    opacity: 0.5;
+}
+
+button:disabled {
+    pointer-events: none;
+}

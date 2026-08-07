@@ -1,0 +1,95 @@
+.elements { 
+    padding: 0;
+}
+
+.elements__grid {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    column-gap: 1vw;
+    row-gap: 2.5vh;
+}
+
+.elements__card {
+    width: 100%;
+    height: auto;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.elements__img {
+    width: 100%;
+    height: 300px;
+    margin: 0;
+    padding: 0;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.elements__delete-button {
+    width: 1.2rem;
+    height: auto;
+    min-height: 15px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.elements__delete-button-img {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    object-fit: contain;
+}
+
+.elements__delete-button:hover {
+    opacity: 0.5;
+}
+
+.elements__legend {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+}
+
+.elements__title {
+    margin-left: 1.5vw;
+    color: black;
+    font-family: "Inter-Black", sans-serif;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-weight: 900;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.elements__like-button {
+    width: 1.5rem;
+    min-width: 15px;
+    height: auto;
+    min-height: 15px;
+    margin-right: 1.5vw;
+}
+
+.elements__like-button-img {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    object-fit: contain;
+}

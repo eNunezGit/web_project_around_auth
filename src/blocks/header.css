@@ -1,0 +1,22 @@
+.header {
+    margin-top: 0;
+    display: flex;
+    justify-content: flex-start;
+    border-bottom: 1px solid #545454;
+}
+
+.header__logo-container {
+    width: 20%;
+    margin: 6vh 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__logo {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    object-fit: contain;
+}

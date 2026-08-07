@@ -1,0 +1,17 @@
+.footer {
+    display: flex;
+    margin-bottom: 5vh;
+}
+
+.footer_margin {
+    margin-top: 12.5vh;
+    margin-bottom: 7.5vh;
+}
+
+.footer__text {
+    justify-self: flex-start;
+    margin: 0;
+    padding: 0;
+    color: #545454;
+    font-weight: 400;
+}
