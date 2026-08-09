@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route } from "react-router";
+import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 
-import defaultAvatar from '../images/default-pic.svg'
+import { LoginContext } from '../contexts/LoginContext.js';
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
+import { CardsContext } from '../contexts/CardsContext.js';
+
+import api from '../utils/api.js';
+
+import ProtectedRoute from './ProtectedRoute.jsx';
 import Header from './Header.jsx';
 import Main from './Main/Main.jsx';
 import Footer from './Footer.jsx';
-import ProtectedRoute from './ProtectedRoute.jsx';
-import api from '../utils/api.js';
-import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
-import { CardsContext } from '../contexts/CardsContext.js';
+
+import defaultAvatar from '../images/default-pic.svg';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({
@@ -16,6 +20,8 @@ function App() {
     about: "Your Info",
     avatar: defaultAvatar,
   });
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [cards, setCards] = useState(null);
   
@@ -84,6 +90,7 @@ function App() {
   }
 
   return (
+    <LoginContext.Provider value={{isLoggedIn, setIsLoggedIn}}>
     <CurrentUserContext.Provider value={{currentUser, handleUpdateUser, handleUpdateAvatar}}>
     <CardsContext.Provider value={{cards, handleCardLike, handleCardDelete, handleAddCard}}>
     <div className="page__content">
@@ -93,22 +100,30 @@ function App() {
           <ProtectedRoute>
             <Main onOpenPopup={handleOpenPopup} onClosePopup={handleClosePopup} popup={popup}/>
           </ProtectedRoute>
-          } />
+        } />
         <Route path="/signup" element={
           <ProtectedRoute anonymous>
             {/* <Login /> */}
           </ProtectedRoute>
-          } />
+        } />
         <Route path="/signin" element={
           <ProtectedRoute anonymous>
             {/* <Register /> */}
           </ProtectedRoute>
-          } />
+        } />
+        <Route path="*" element={
+          isLoggedIn ? (
+            <Navigate to="/" />
+          ) : (
+            <Navigate to="/signup" />
+          )
+        } />
       </Routes>
       <Footer />
     </div>
     </CardsContext.Provider>
     </CurrentUserContext.Provider>
+    </LoginContext.Provider>
   )
 }
 
