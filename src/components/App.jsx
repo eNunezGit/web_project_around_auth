@@ -111,13 +111,6 @@ function App() {
             {/* <Register /> */}
           </ProtectedRoute>
         } />
-        <Route path="*" element={
-          isLoggedIn ? (
-            <Navigate to="/" />
-          ) : (
-            <Navigate to="/signup" />
-          )
-        } />
       </Routes>
       <Footer />
     </div>
