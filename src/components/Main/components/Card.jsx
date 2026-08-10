@@ -1,7 +1,7 @@
-import deleteButton from '../../../../images/delete-button.svg';
-import likeButton from '../../../../images/like-button.svg';
-import likeButtonFull from '../../../../images/like-button_full.svg';
-import ImagePopup from '../../Popup/ImagePopup/ImagePopup.jsx';
+import deleteButton from '../../../images/delete-button.svg';
+import likeButton from '../../../images/like-button.svg';
+import likeButtonFull from '../../../images/like-button_full.svg';
+import ImagePopup from '../Popup/ImagePopup.jsx';
 
 export default function Card(props) {
   const cardData  = props.card;

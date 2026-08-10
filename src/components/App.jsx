@@ -101,12 +101,12 @@ function App() {
             <Main onOpenPopup={handleOpenPopup} onClosePopup={handleClosePopup} popup={popup}/>
           </ProtectedRoute>
         } />
-        <Route path="/signup" element={
+        <Route path="/signin" element={
           <ProtectedRoute anonymous>
             {/* <Login /> */}
           </ProtectedRoute>
         } />
-        <Route path="/signin" element={
+        <Route path="/signup" element={
           <ProtectedRoute anonymous>
             {/* <Register /> */}
           </ProtectedRoute>
