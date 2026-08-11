@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import { LoginContext } from '../contexts/LoginContext.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
@@ -64,7 +64,7 @@ function App() {
   
   const handleCardDelete = (card) => {
     api.deleteCard(card._id)
-    .then((newCard) => {
+    .then(() => {
       setCards((state) => state.filter((currentCard) => currentCard._id !== card._id));
     })
     .catch(console.error);

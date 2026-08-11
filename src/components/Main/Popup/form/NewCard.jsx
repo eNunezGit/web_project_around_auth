@@ -1,8 +1,8 @@
 import { useState, useContext } from 'react'; 
-import { CardsContext } from '../../../../contexts/CardsContext';
+import { CardsContext } from '../../../../contexts/CardsContext.js';
 
 export default function NewCard() {
-  const { cards, handleAddCard } = useContext(CardsContext);
+  const { handleAddCard } = useContext(CardsContext);
 
   const [cardTitle, setCardTitle] = useState("");
   const [cardUrl, setCardUrl] = useState("");

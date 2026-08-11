@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { LoginContext } from "../contexts/LoginContext";
+import { LoginContext } from "../contexts/LoginContext.js";
 
 function ProtectedRoute({ children, anonymous = false }) {
   const location = useLocation();

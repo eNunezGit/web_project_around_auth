@@ -1,16 +1,15 @@
-import { useState, useEffect, useContext } from 'react'
-import { CurrentUserContext } from '../../contexts/CurrentUserContext.js'
-import { CardsContext } from '../../contexts/CardsContext.js'
+import { useContext } from 'react';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
+import { CardsContext } from '../../contexts/CardsContext.js';
 
-import pencilIcon from '../../images/pencil.svg'
-import editButton from '../../images/edit-button.svg'
-import addButton from '../../images/add-button.svg'
-import Popup from './Popup/Popup.jsx'
-import NewCard from './Popup/form/NewCard.jsx'
-import EditProfile from './Popup/form/EditProfile.jsx'
-import EditAvatar from './Popup/form/EditAvatar.jsx'
-import Card from './components/Card.jsx'
-import api from '../../utils/api.js'
+import pencilIcon from '../../images/pencil.svg';
+import editButton from '../../images/edit-button.svg';
+import addButton from '../../images/add-button.svg';
+import Popup from './Popup/Popup.jsx';
+import NewCard from './Popup/form/NewCard.jsx';
+import EditProfile from './Popup/form/EditProfile.jsx';
+import EditAvatar from './Popup/form/EditAvatar.jsx';
+import Card from './components/Card.jsx';
 
 function Main(props) {
   const {currentUser} = useContext(CurrentUserContext);
@@ -107,4 +106,4 @@ function Main(props) {
   );
 }
 
-export default Main
+export default Main;
