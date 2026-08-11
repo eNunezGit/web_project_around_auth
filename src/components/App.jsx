@@ -92,13 +92,14 @@ function App() {
   return (
     <LoginContext.Provider value={{isLoggedIn, setIsLoggedIn}}>
     <CurrentUserContext.Provider value={{currentUser, handleUpdateUser, handleUpdateAvatar}}>
-    <CardsContext.Provider value={{cards, handleCardLike, handleCardDelete, handleAddCard}}>
     <div className="page__content">
       <Header />
       <Routes>
         <Route path="/" element={
           <ProtectedRoute>
+            <CardsContext.Provider value={{cards, handleCardLike, handleCardDelete, handleAddCard}}>
             <Main onOpenPopup={handleOpenPopup} onClosePopup={handleClosePopup} popup={popup}/>
+            </CardsContext.Provider>
           </ProtectedRoute>
         } />
         <Route path="/signin" element={
@@ -114,7 +115,6 @@ function App() {
       </Routes>
       <Footer />
     </div>
-    </CardsContext.Provider>
     </CurrentUserContext.Provider>
     </LoginContext.Provider>
   )
