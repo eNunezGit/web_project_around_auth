@@ -1,5 +1,7 @@
-import { useState, useContext } from 'react'; 
+import { useState, useContext } from 'react';
 import { CardsContext } from '../../../../contexts/CardsContext.js';
+import Form from '../../../Form/Form.jsx';
+import FormField from '../../../Form/FormField.jsx';
 
 export default function NewCard() {
   const { handleAddCard } = useContext(CardsContext);
@@ -10,7 +12,7 @@ export default function NewCard() {
   const handleTitleChange = (event) => {
     setCardTitle(event.target.value);
   }
-  
+
   const handleUrlChange = (event) => {
     setCardUrl(event.target.value);
   }
@@ -22,46 +24,34 @@ export default function NewCard() {
   };
 
   return (
-    <form
-      className="popup__form"
+    <Form
       name="card-form"
       id="new-card-form"
-      noValidate
       onSubmit={handleSubmit}
+      submitText="Create"
     >
-      <div className="popup__fieldset">
-        <label className="popup__field">
-          <input
-            className="popup__form-input"
-            id="card-title"
-            maxLength="40"
-            minLength="2"
-            name="card-title"
-            placeholder="Title"
-            required
-            type="text"
-            value={cardTitle}
-            onChange={handleTitleChange}
-            />
-          <span className="popup__error-info" id="card-title-error">Lore ipsum</span>
-        </label>
-        <label className="popup__field">
-          <input
-            className="popup__form-input"
-            id="card-url"
-            name="card-url"
-            placeholder="Image link"
-            required
-            type="url"
-            value={cardUrl}
-            onChange={handleUrlChange}
-            />
-          <span className="popup__error-info" id="card-url-error">Lore ipsum</span>
-        </label>
-      </div>
-      <button className="popup__submit-button" type="submit">
-        <span className="popup__submit-button-text">Create</span>
-      </button>
-    </form>
+      <FormField
+        id="card-title"
+        name="card-title"
+        maxLength="40"
+        minLength="2"
+        placeholder="Title"
+        required
+        type="text"
+        value={cardTitle}
+        onChange={handleTitleChange}
+        errorText="Lore ipsum"
+      />
+      <FormField
+        id="card-url"
+        name="card-url"
+        placeholder="Image link"
+        required
+        type="url"
+        value={cardUrl}
+        onChange={handleUrlChange}
+        errorText="Lore ipsum"
+      />
+    </Form>
   );
 }

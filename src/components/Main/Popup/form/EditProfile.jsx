@@ -1,5 +1,7 @@
-import { useState, useContext } from 'react'; 
+import { useState, useContext } from 'react';
 import { CurrentUserContext } from '../../../../contexts/CurrentUserContext.js';
+import Form from '../../../Form/Form.jsx';
+import FormField from '../../../Form/FormField.jsx';
 
 export default function EditProfile() {
   const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
@@ -22,48 +24,36 @@ export default function EditProfile() {
   };
 
   return (
-    <form
-      className="popup__form"
+    <Form
       name="profile-form"
       id="edit-profile-form"
-      noValidate
       onSubmit={handleSubmit}
+      submitText="Save"
     >
-      <div className="popup__fieldset">
-        <label className="popup__field">
-          <input
-            className="popup__form-input"
-            id="user-name"
-            maxLength="40"
-            minLength="2"
-            name="user-name"
-            placeholder={currentUser.name}
-            required
-            type="text"
-            value={name}
-            onChange={handleNameChange}
-            />
-          <span className="popup__error-info" id="user-name-error">Lore ipsum</span>
-        </label>
-        <label className="popup__field">
-          <input
-            className="popup__form-input"
-            id="user-info"
-            maxLength="200"
-            minLength="2"
-            name="user-info"
-            placeholder={currentUser.about}
-            required
-            type="text"
-            value={description}
-            onChange={handleDescriptionChange}
-          />
-          <span className="popup__error-info" id="user-info-error">Lore ipsum</span>
-        </label>
-      </div>
-      <button className="popup__submit-button" type="submit">
-        <span className="popup__submit-button-text">Save</span>
-      </button>
-    </form>
+      <FormField
+        id="user-name"
+        name="user-name"
+        maxLength="40"
+        minLength="2"
+        placeholder={currentUser.name}
+        required
+        type="text"
+        value={name}
+        onChange={handleNameChange}
+        errorText="Lore ipsum"
+      />
+      <FormField
+        id="user-info"
+        name="user-info"
+        maxLength="200"
+        minLength="2"
+        placeholder={currentUser.about}
+        required
+        type="text"
+        value={description}
+        onChange={handleDescriptionChange}
+        errorText="Lore ipsum"
+      />
+    </Form>
   );
 }
