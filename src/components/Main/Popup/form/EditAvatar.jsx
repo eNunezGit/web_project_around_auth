@@ -2,11 +2,14 @@ import { useRef, useContext } from 'react';
 import { CurrentUserContext } from '../../../../contexts/CurrentUserContext.js';
 import Form from '../../../Form/Form.jsx';
 import FormField from '../../../Form/FormField.jsx';
+import { useFormValidation } from '../../../../utils/useFormValidation.js';
 
 export default function EditAvatar() {
   const { handleUpdateAvatar } = useContext(CurrentUserContext);
 
   const avatarRef = useRef(null);
+
+  const { errors, isValid, handleValidation } = useFormValidation();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -24,6 +27,7 @@ export default function EditAvatar() {
       id="edit-avatar-form"
       onSubmit={handleSubmit}
       submitText="Save"
+      submitDisabled={!isValid}
     >
       <FormField
         fieldClassName="popup__form-field"
@@ -35,7 +39,8 @@ export default function EditAvatar() {
         placeholder="Image link"
         required
         type="url"
-        errorText="Lore ipsum"
+        onChange={handleValidation}
+        errorText={errors["avatar-url"]}
       />
     </Form>
   );

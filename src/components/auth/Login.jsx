@@ -2,8 +2,11 @@ import { Link } from "react-router-dom";
 
 import Form from "../Form/Form";
 import FormField from "../Form/FormField";
+import { useFormValidation } from "../../utils/useFormValidation";
 
 function Login() {
+  const { errors, isValid, handleValidation } = useFormValidation();
+
   const handleSubmit = (event) => {
     event.preventDefault();
   }
@@ -16,14 +19,16 @@ function Login() {
         id="auth-login"
         onSubmit={handleSubmit}
         submitText="Inicia sesión"
+        submitDisabled={!isValid}
       >
         <FormField
           id="auth-email"
-          name="avatar-url"
+          name="auth-email"
           placeholder="Correo electrónico"
           required
           type="email"
-          errorText="Lore ipsum"
+          onChange={handleValidation}
+          errorText={errors["auth-email"]}
         />
         <FormField
           id="auth-password"
@@ -31,7 +36,8 @@ function Login() {
           placeholder="Contraseña"
           required
           type="password"
-          errorText="Lore ipsum"
+          onChange={handleValidation}
+          errorText={errors["auth-password"]}
         />
       </Form>
       <p className="auth__footer">

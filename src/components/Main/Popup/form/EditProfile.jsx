@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { CurrentUserContext } from '../../../../contexts/CurrentUserContext.js';
 import Form from '../../../Form/Form.jsx';
 import FormField from '../../../Form/FormField.jsx';
+import { useFormValidation } from '../../../../utils/useFormValidation.js';
 
 export default function EditProfile() {
   const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
@@ -9,12 +10,16 @@ export default function EditProfile() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
+  const { errors, isValid, handleValidation } = useFormValidation();
+
   const handleNameChange = (event) => {
     setName(event.target.value);
+    handleValidation(event);
   };
 
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
+    handleValidation(event);
   };
 
   const handleSubmit = (event) => {
@@ -33,6 +38,7 @@ export default function EditProfile() {
       id="edit-profile-form"
       onSubmit={handleSubmit}
       submitText="Save"
+      submitDisabled={!isValid}
     >
       <FormField
         fieldClassName="popup__form-field"
@@ -47,7 +53,7 @@ export default function EditProfile() {
         type="text"
         value={name}
         onChange={handleNameChange}
-        errorText="Lore ipsum"
+        errorText={errors["user-name"]}
       />
       <FormField
         fieldClassName="popup__form-field"
@@ -62,7 +68,7 @@ export default function EditProfile() {
         type="text"
         value={description}
         onChange={handleDescriptionChange}
-        errorText="Lore ipsum"
+        errorText={errors["user-info"]}
       />
     </Form>
   );

@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { CardsContext } from '../../../../contexts/CardsContext.js';
 import Form from '../../../Form/Form.jsx';
 import FormField from '../../../Form/FormField.jsx';
+import { useFormValidation } from '../../../../utils/useFormValidation.js';
 
 export default function NewCard() {
   const { handleAddCard } = useContext(CardsContext);
@@ -9,12 +10,16 @@ export default function NewCard() {
   const [cardTitle, setCardTitle] = useState("");
   const [cardUrl, setCardUrl] = useState("");
 
+  const { errors, isValid, handleValidation } = useFormValidation();
+
   const handleTitleChange = (event) => {
     setCardTitle(event.target.value);
+    handleValidation(event);
   }
 
   const handleUrlChange = (event) => {
     setCardUrl(event.target.value);
+    handleValidation(event);
   }
 
   const handleSubmit = (event) => {
@@ -33,6 +38,7 @@ export default function NewCard() {
       id="new-card-form"
       onSubmit={handleSubmit}
       submitText="Create"
+      submitDisabled={!isValid}
     >
       <FormField
         fieldClassName="popup__form-field"
@@ -47,8 +53,8 @@ export default function NewCard() {
         type="text"
         value={cardTitle}
         onChange={handleTitleChange}
-        errorText="Lore ipsum"
-      />
+        errorText={errors["card-title"]}
+        />
       <FormField
         fieldClassName="popup__form-field"
         inputClassName="popup__form-input"
@@ -60,7 +66,7 @@ export default function NewCard() {
         type="url"
         value={cardUrl}
         onChange={handleUrlChange}
-        errorText="Lore ipsum"
+        errorText={errors["card-url"]}
       />
     </Form>
   );

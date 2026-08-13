@@ -3,6 +3,7 @@ export default function Form({
   id,
   onSubmit,
   submitText,
+  submitDisabled = false,
   children,
   formClassName = 'form',
   fieldsetClassName = 'form__fieldset',
@@ -20,7 +21,11 @@ export default function Form({
       <div className={fieldsetClassName}>
         {children}
       </div>
-      <button className={submitClassName} type="submit">
+      <button
+        className={submitDisabled ? `${submitClassName} ${submitClassName}_disabled` : submitClassName}
+        type="submit"
+        disabled={submitDisabled}
+      >
         <span className={submitTextClassName}>{submitText}</span>
       </button>
     </form>
