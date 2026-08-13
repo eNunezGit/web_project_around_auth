@@ -34,7 +34,7 @@
     padding: 0;
 }
 
-.form-input {
+.form__input {
     color: inherit;
     width: 98.5%;
     height: auto;
@@ -43,23 +43,23 @@
     background-color: inherit;
 }
 
-.form-input::placeholder {
+.form__input::placeholder {
     color: #CCCCCC;
 }
 
-.form-input-error {
+.form__input_error {
     color: red;
     border-bottom: 1px solid red;
 }
 
-.form-input__error-info {
+.form__error-info {
     user-select: none;
     color: transparent;
     font-size: 0.8rem;
 }
 
 
-.form-input__error-info_visible {
+.form__error-info_visible {
     user-select: text;
     color: red;
 }

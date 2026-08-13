@@ -3,8 +3,8 @@ export default function FormField({
   errorText,
   inputRef,
   fieldClassName = 'form__field',
-  inputClassName = 'form-input',
-  errorClassName = 'form-input__error-info',
+  inputClassName = 'form__input',
+  errorClassName = 'form__error-info',
   ...inputProps
 }) {
   return (

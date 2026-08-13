@@ -23,7 +23,7 @@ function App() {
     avatar: defaultAvatar,
   });
 
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [cards, setCards] = useState(null);
   
