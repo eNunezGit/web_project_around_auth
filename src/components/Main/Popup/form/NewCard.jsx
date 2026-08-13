@@ -25,12 +25,19 @@ export default function NewCard() {
 
   return (
     <Form
+      formClassName="popup__form"
+      fieldsetClassName="popup__form-fieldset"
+      submitClassName="popup__submit-button"
+      submitTextClassName="popup__submit-button-text"
       name="card-form"
       id="new-card-form"
       onSubmit={handleSubmit}
       submitText="Create"
     >
       <FormField
+        fieldClassName="popup__form-field"
+        inputClassName="popup__form-input"
+        errorClassName="popup__error-info"
         id="card-title"
         name="card-title"
         maxLength="40"
@@ -43,6 +50,9 @@ export default function NewCard() {
         errorText="Lore ipsum"
       />
       <FormField
+        fieldClassName="popup__form-field"
+        inputClassName="popup__form-input"
+        errorClassName="popup__error-info"
         id="card-url"
         name="card-url"
         placeholder="Image link"

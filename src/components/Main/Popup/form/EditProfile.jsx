@@ -25,12 +25,19 @@ export default function EditProfile() {
 
   return (
     <Form
+      formClassName="popup__form"
+      fieldsetClassName="popup__form-fieldset"
+      submitClassName="popup__submit-button"
+      submitTextClassName="popup__submit-button-text"
       name="profile-form"
       id="edit-profile-form"
       onSubmit={handleSubmit}
       submitText="Save"
     >
       <FormField
+        fieldClassName="popup__form-field"
+        inputClassName="popup__form-input"
+        errorClassName="popup__error-info"
         id="user-name"
         name="user-name"
         maxLength="40"
@@ -43,6 +50,9 @@ export default function EditProfile() {
         errorText="Lore ipsum"
       />
       <FormField
+        fieldClassName="popup__form-field"
+        inputClassName="popup__form-input"
+        errorClassName="popup__error-info"
         id="user-info"
         name="user-info"
         maxLength="200"

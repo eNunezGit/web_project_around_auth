@@ -16,12 +16,19 @@ export default function EditAvatar() {
 
   return (
     <Form
+      formClassName="popup__form"
+      fieldsetClassName="popup__form-fieldset"
+      submitClassName="popup__submit-button"
+      submitTextClassName="popup__submit-button-text"
       name="avatar-form"
       id="edit-avatar-form"
       onSubmit={handleSubmit}
       submitText="Save"
     >
       <FormField
+        fieldClassName="popup__form-field"
+        inputClassName="popup__form-input"
+        errorClassName="popup__error-info"
         inputRef={avatarRef}
         id="avatar-url"
         name="avatar-url"
