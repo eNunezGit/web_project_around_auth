@@ -8,6 +8,8 @@ import { CardsContext } from '../contexts/CardsContext.js';
 import api from '../utils/api.js';
 
 import ProtectedRoute from './ProtectedRoute.jsx';
+import Login from './auth/Login.jsx';
+import Register from './auth/Register.jsx';
 import Header from './Header.jsx';
 import Main from './Main/Main.jsx';
 import Footer from './Footer.jsx';
@@ -100,20 +102,20 @@ function App() {
             <CardsContext.Provider value={{cards, handleCardLike, handleCardDelete, handleAddCard}}>
             <Main onOpenPopup={handleOpenPopup} onClosePopup={handleClosePopup} popup={popup}/>
             </CardsContext.Provider>
+            <Footer />
           </ProtectedRoute>
         } />
         <Route path="/signin" element={
           <ProtectedRoute anonymous>
-            {/* <Login /> */}
+            <Login />
           </ProtectedRoute>
         } />
         <Route path="/signup" element={
           <ProtectedRoute anonymous>
-            {/* <Register /> */}
+            <Register />
           </ProtectedRoute>
         } />
       </Routes>
-      <Footer />
     </div>
     </CurrentUserContext.Provider>
     </LoginContext.Provider>

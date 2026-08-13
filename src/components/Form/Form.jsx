@@ -4,10 +4,10 @@ export default function Form({
   onSubmit,
   submitText,
   children,
-  formClassName = 'popup__form',
-  fieldsetClassName = 'popup__fieldset',
-  submitClassName = 'popup__submit-button',
-  submitTextClassName = 'popup__submit-button-text',
+  formClassName = 'form',
+  fieldsetClassName = 'form__fieldset',
+  submitClassName = 'form__submit-button',
+  submitTextClassName = 'form__submit-button-text',
 }) {
   return (
     <form

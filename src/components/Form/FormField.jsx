@@ -2,9 +2,9 @@ export default function FormField({
   id,
   errorText,
   inputRef,
-  fieldClassName = 'popup__field',
-  inputClassName = 'popup__form-input',
-  errorClassName = 'popup__error-info',
+  fieldClassName = 'form__field',
+  inputClassName = 'form-input',
+  errorClassName = 'form-input__error-info',
   ...inputProps
 }) {
   return (

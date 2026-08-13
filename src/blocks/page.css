@@ -27,6 +27,14 @@ html, body, #root {
     margin-top: 5vh;
 }
 
+a {
+    color: inherit;
+}
+
+a:hover {
+    opacity: 0.75;
+}
+
 img {
     user-select: none;
     -webkit-user-drag: none;
