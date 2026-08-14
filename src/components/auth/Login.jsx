@@ -1,14 +1,27 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import Form from "../Form/Form";
 import FormField from "../Form/FormField";
-import { useFormValidation } from "../../utils/useFormValidation";
+import Popup from "../Popup/Popup.jsx";
+import Tooltip from "../Popup/Tooltip.jsx";
+import { useFormValidation } from "../../hooks/useFormValidation";
 
 function Login() {
   const { errors, isValid, handleValidation } = useFormValidation();
 
+  // null = tooltip cerrado, true = autenticación exitosa, false = falló
+  const [authStatus, setAuthStatus] = useState(null);
+
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    setAuthStatus(true);
+
+    // TODO: reemplazar por la llamada real cuando exista api.login
+    // api.login({ email, password })
+    //   .then(() => setAuthStatus(true))
+    //   .catch(() => setAuthStatus(false));
   }
 
   return (
@@ -44,6 +57,18 @@ function Login() {
         ¿Aún no eres miembro?{" "}
         <Link to="/signup">Regístrate aquí</Link>
       </p>
+      {authStatus !== null && (
+        <Popup onClose={() => setAuthStatus(null)} variant="tooltip">
+          <Tooltip
+            isSuccess={authStatus}
+            message={
+              authStatus
+                ? "¡Inicio de sesión exitoso!"
+                : "Correo o contraseña incorrectos. Inténtalo de nuevo."
+            }
+          />
+        </Popup>
+      )}
     </div>
     );
 }
