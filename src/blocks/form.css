@@ -76,9 +76,9 @@
 }
 
 .form__submit-button_disabled {
-    color: rgb(202, 202, 202);
-    border: 1.5px solid rgb(202, 202, 202);
-    background-color: white;
+    color: #A9A9A9;
+    border: 1.5px solid #A9A9A9;
+    background-color: black;
 }
 
 .form__submit-button-text {
