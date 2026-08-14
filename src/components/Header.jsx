@@ -9,7 +9,7 @@ function Header() {
   const location = useLocation();
   const route = location.pathname;
 
-  const { isLoggedIn } = useContext(LoginContext);
+  const { isLoggedIn, userEmail } = useContext(LoginContext);
 
   const handleButtonClick = () => {
     if (!isLoggedIn) {
@@ -17,7 +17,8 @@ function Header() {
       ? navigate("/signup")
       : navigate("/signin")
     } else {
-      // elimina el jwt :P
+      localStorage.clear();
+      navigate("/signin")
     }
   };
 
@@ -36,7 +37,7 @@ function Header() {
           </button>
         </div>)
       : (<div className="header__container">
-          <p className="header__text">example@gmail.com</p>
+          <p className="header__text">{userEmail}</p>
           <button className="header__button" onClick={handleButtonClick}>
             <span className="header__text_gray">Cerrar sesión</span>
           </button>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import Form from "../Form/Form";
@@ -6,22 +6,34 @@ import FormField from "../Form/FormField";
 import Popup from "../Popup/Popup.jsx";
 import Tooltip from "../Popup/Tooltip.jsx";
 import { useFormValidation } from "../../hooks/useFormValidation";
+import { LoginContext } from "../../contexts/LoginContext.js";
 
 function Login() {
+  const { handleLogin } = useContext(LoginContext);
   const { errors, isValid, handleValidation } = useFormValidation();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // null = tooltip cerrado, true = autenticación exitosa, false = falló
   const [authStatus, setAuthStatus] = useState(null);
 
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+    handleValidation(event);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+    handleValidation(event);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    setAuthStatus(true);
-
-    // TODO: reemplazar por la llamada real cuando exista api.login
-    // api.login({ email, password })
-    //   .then(() => setAuthStatus(true))
-    //   .catch(() => setAuthStatus(false));
+    handleLogin({ email, password })
+      .then(() => setAuthStatus(true))
+      .catch(() => setAuthStatus(false));
   }
 
   return (
@@ -40,7 +52,8 @@ function Login() {
           placeholder="Correo electrónico"
           required
           type="email"
-          onChange={handleValidation}
+          value={email}
+          onChange={handleEmailChange}
           errorText={errors["auth-email"]}
         />
         <FormField
@@ -49,7 +62,8 @@ function Login() {
           placeholder="Contraseña"
           required
           type="password"
-          onChange={handleValidation}
+          value={password}
+          onChange={handlePasswordChange}
           errorText={errors["auth-password"]}
         />
       </Form>

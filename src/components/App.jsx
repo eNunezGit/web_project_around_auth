@@ -6,6 +6,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import { CardsContext } from '../contexts/CardsContext.js';
 
 import api from '../utils/api.js';
+import * as auth from '../utils/auth.js';
 
 import ProtectedRoute from './ProtectedRoute.jsx';
 import Login from './Auth/Login.jsx';
@@ -23,19 +24,78 @@ function App() {
     avatar: defaultAvatar,
   });
 
+  const [userEmail, setUserEmail] = useState('');
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // true mientras se valida un token guardado de una visita anterior.
+  // Evita que ProtectedRoute redirija a /signin por una fracción de segundo
+  // antes de que sepamos si el usuario ya estaba logueado. Si no hay token
+  // guardado no hay nada que validar, así que arranca en false directamente.
+  const [isCheckingToken, setIsCheckingToken] = useState(
+    () => Boolean(localStorage.getItem('jwt'))
+  );
+
   const [cards, setCards] = useState(null);
-  
+
+  // Correo del usuario logueado, tal como lo devuelve auth.checkToken
+  // (/users/me) — no viene de lo que el usuario tipeó en el formulario.
+
+  // Al montar: si hay un token guardado de una visita anterior, lo validamos
+  // contra /users/me antes de decidir si el usuario sigue logueado.
   useEffect(() => {
+    const token = localStorage.getItem('jwt');
+
+    if (!token) {
+      return;
+    }
+
+    auth.checkToken(token)
+      .then((res) => {
+        api.setToken(token);
+        setUserEmail(res.data.email);
+        setIsLoggedIn(true);
+      })
+      .catch(() => {
+        localStorage.removeItem('jwt');
+      })
+      .finally(() => {
+        setIsCheckingToken(false);
+      });
+  }, []);
+
+  // Los endpoints de perfil/tarjetas están protegidos: sin token (antes de
+  // iniciar sesión) fallarían, así que esperamos a que isLoggedIn sea true.
+  useEffect(() => {
+    if (!isLoggedIn) return;
+
     Promise.all([api.getUserInfo(), api.getInitialCards()])
     .then(([userData, cardsData]) => {
       setCurrentUser(userData);
       setCards(cardsData);
     })
     .catch(console.error);
-  }, []);
-  
+  }, [isLoggedIn]);
+
+  const handleLogin = ({ email, password }) => {
+    return auth.login({ email, password })
+      .then((data) => {
+        localStorage.setItem('jwt', data.token);
+        api.setToken(data.token);
+
+        return auth.checkToken(data.token);
+      })
+      .then((res) => {
+        setUserEmail(res.data.email);
+        setIsLoggedIn(true);
+      })
+  }
+
+  const handleRegister = ({ email, password }) => {
+    return auth.register({ email, password });
+  }
+
+
   const handleUpdateUser = (data) => {
     api.updateUserInfo(data)
     .then(userData => {
@@ -91,8 +151,14 @@ function App() {
     setPopup(null);
   }
 
+  // Nada que decidir todavía: no sabemos si hay sesión válida, así que no
+  // renderizamos rutas para no mandar a /signin a alguien que sí la tiene.
+  if (isCheckingToken) {
+    return null;
+  }
+
   return (
-    <LoginContext.Provider value={{isLoggedIn, setIsLoggedIn}}>
+    <LoginContext.Provider value={{isLoggedIn, setIsLoggedIn, handleLogin, handleRegister, userEmail}}>
     <CurrentUserContext.Provider value={{currentUser, handleUpdateUser, handleUpdateAvatar}}>
     <div className="page__content">
       <Header />

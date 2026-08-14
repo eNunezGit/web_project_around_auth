@@ -1,7 +1,21 @@
 class Api {
-    constructor({baseUrl, headers}) {
+    constructor({baseUrl}) {
         this._baseUrl = baseUrl;
-        this._headers = headers;
+        this._token = null;
+    }
+
+    setToken(token) {
+        this._token = token;
+    }
+
+    _getHeaders() {
+        const headers = { "Content-Type": "application/json" };
+
+        if (this._token) {
+            headers.Authorization = `Bearer ${this._token}`;
+        }
+
+        return headers;
     }
 
     _checkResponse(res) {
@@ -17,7 +31,7 @@ class Api {
     _request(endpoint, options = {}) {
         return fetch(`${this._baseUrl}${endpoint}`, {
             ...options,
-            headers: this._headers,
+            headers: this._getHeaders(),
         })
         .then(this._checkResponse);
     }
@@ -69,11 +83,7 @@ class Api {
 }
 
 const api = new Api({
-    baseUrl: "https://around-api.es.tripleten-services.com/v1",
-    headers: {
-        authorization: "b100bf75-a46c-483c-9b28-27beb1ac7303",
-        "Content-Type": "application/json"
-    }
+    baseUrl: "https://se-register-api.en.tripleten-services.com/v1",
 });
 
 export default api;
