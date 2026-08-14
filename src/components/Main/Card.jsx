@@ -1,6 +1,6 @@
-import deleteButton from '../../../images/delete-button.svg';
-import likeButton from '../../../images/like-button.svg';
-import likeButtonFull from '../../../images/like-button_full.svg';
+import deleteButton from '../../images/delete-button.svg';
+import likeButton from '../../images/like-button.svg';
+import likeButtonFull from '../../images/like-button_full.svg';
 import ImagePopup from '../Popup/ImagePopup.jsx';
 
 export default function Card(props) {
@@ -10,7 +10,7 @@ export default function Card(props) {
   const onCardDelete = props.onCardDelete
 
   const imageComponent = {
-    title: null,
+    variant: 'image',
     children: <ImagePopup card={props.card} />
   }
 

@@ -5,11 +5,11 @@ import { CardsContext } from '../../contexts/CardsContext.js';
 import pencilIcon from '../../images/pencil.svg';
 import editButton from '../../images/edit-button.svg';
 import addButton from '../../images/add-button.svg';
-import Popup from './Popup/Popup.jsx';
-import NewCard from './Popup/form/NewCard.jsx';
-import EditProfile from './Popup/form/EditProfile.jsx';
-import EditAvatar from './Popup/form/EditAvatar.jsx';
-import Card from './components/Card.jsx';
+import Popup from '../Popup/Popup.jsx';
+import NewCard from './popup-forms/NewCard.jsx';
+import EditProfile from './popup-forms/EditProfile.jsx';
+import EditAvatar from './popup-forms/EditAvatar.jsx';
+import Card from './Card.jsx';
 
 function Main(props) {
   const {currentUser} = useContext(CurrentUserContext);
@@ -98,7 +98,7 @@ function Main(props) {
         )}
       </div>
       {popup && (
-        <Popup onClose={handleClosePopup} title={popup.title}>
+        <Popup onClose={handleClosePopup} title={popup.title} variant={popup.variant}>
           {popup.children}
         </Popup>
       )}

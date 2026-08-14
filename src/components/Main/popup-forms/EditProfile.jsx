@@ -1,8 +1,8 @@
 import { useState, useContext } from 'react';
-import { CurrentUserContext } from '../../../../contexts/CurrentUserContext.js';
-import Form from '../../../Form/Form.jsx';
-import FormField from '../../../Form/FormField.jsx';
-import { useFormValidation } from '../../../../utils/useFormValidation.js';
+import { CurrentUserContext } from '../../../contexts/CurrentUserContext.js';
+import Form from '../../Form/Form.jsx';
+import FormField from '../../Form/FormField.jsx';
+import { useFormValidation } from '../../../hooks/useFormValidation.js';
 
 export default function EditProfile() {
   const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);

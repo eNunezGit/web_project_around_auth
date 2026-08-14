@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import { LoginContext } from '../contexts/LoginContext.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
@@ -8,8 +8,8 @@ import { CardsContext } from '../contexts/CardsContext.js';
 import api from '../utils/api.js';
 
 import ProtectedRoute from './ProtectedRoute.jsx';
-import Login from './auth/Login.jsx';
-import Register from './auth/Register.jsx';
+import Login from './Auth/Login.jsx';
+import Register from './Auth/Register.jsx';
 import Header from './Header.jsx';
 import Main from './Main/Main.jsx';
 import Footer from './Footer.jsx';
