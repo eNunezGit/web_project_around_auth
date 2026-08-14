@@ -1,11 +1,11 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 
-import Form from "../Form/Form";
-import FormField from "../Form/FormField";
+import Form from "../Form/Form.jsx";
+import FormField from "../Form/FormField.jsx";
 import Popup from "../Popup/Popup.jsx";
 import Tooltip from "../Popup/Tooltip.jsx";
-import { useFormValidation } from "../../hooks/useFormValidation";
+import { useFormValidation } from "../../hooks/useFormValidation.js";
 import { LoginContext } from "../../contexts/LoginContext.js";
 
 function Register() {
