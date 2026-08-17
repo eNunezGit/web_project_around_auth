@@ -9,7 +9,7 @@ function Header() {
   const location = useLocation();
   const route = location.pathname;
 
-  const { isLoggedIn, userEmail } = useContext(LoginContext);
+  const { isLoggedIn, userEmail, handleSignOut } = useContext(LoginContext);
 
   const handleButtonClick = () => {
     if (!isLoggedIn) {
@@ -17,8 +17,9 @@ function Header() {
       ? navigate("/signup")
       : navigate("/signin")
     } else {
-      localStorage.clear();
-      navigate("/signin")
+      // handleSignOut vive en App: limpia el jwt, el token de api,
+      // isLoggedIn y userEmail, y navega a /signin.
+      handleSignOut();
     }
   };
 

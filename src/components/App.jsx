@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 
 import { LoginContext } from '../contexts/LoginContext.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
@@ -14,16 +14,22 @@ import Register from './Auth/Register.jsx';
 import Header from './Header.jsx';
 import Main from './Main/Main.jsx';
 import Footer from './Footer.jsx';
+import Popup from './Popup/Popup.jsx';
+import InfoTooltip from './Popup/InfoTooltip.jsx';
 
 import defaultAvatar from '../images/default-pic.svg';
 
 function App() {
+  const navigate = useNavigate();
+
   const [currentUser, setCurrentUser] = useState({
     name: "Your Name",
     about: "Your Info",
     avatar: defaultAvatar,
   });
 
+  // Correo del usuario logueado, tal como lo devuelve auth.checkToken
+  // (/users/me) — no viene de lo que el usuario tipeó en el formulario.
   const [userEmail, setUserEmail] = useState('');
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -38,8 +44,13 @@ function App() {
 
   const [cards, setCards] = useState(null);
 
-  // Correo del usuario logueado, tal como lo devuelve auth.checkToken
-  // (/users/me) — no viene de lo que el usuario tipeó en el formulario.
+  // null = cerrado. { isSuccess, message, redirectTo } cuando hay que mostrarlo.
+  // redirectTo indica a dónde navegar al cerrarlo (registro exitoso -> /signin).
+  const [tooltip, setTooltip] = useState(null);
+
+  // Cambiar esta key remonta Login/Register, lo que vacía sus campos y su
+  // validación sin que App tenga que conocer su estado interno.
+  const [formResetKey, setFormResetKey] = useState(0);
 
   // Al montar: si hay un token guardado de una visita anterior, lo validamos
   // contra /users/me antes de decidir si el usuario sigue logueado.
@@ -89,12 +100,51 @@ function App() {
         setUserEmail(res.data.email);
         setIsLoggedIn(true);
       })
+      .catch(() => {
+        setTooltip({
+          isSuccess: false,
+          message: "Correo o contraseña incorrectos. Inténtalo de nuevo.",
+        });
+      });
   }
 
   const handleRegister = ({ email, password }) => {
-    return auth.register({ email, password });
+    return auth.register({ email, password })
+      .then(() => {
+        setTooltip({
+          isSuccess: true,
+          message: "¡Correcto! Ya estás registrado.",
+          redirectTo: "/signin",
+        });
+      })
+      .catch(() => {
+        setTooltip({
+          isSuccess: false,
+          message: "Uy, algo salió mal. Por favor, inténtalo de nuevo.",
+        });
+      });
   }
 
+  const handleSignOut = () => {
+    localStorage.removeItem('jwt');
+    api.setToken(null);
+    setIsLoggedIn(false);
+    setUserEmail('');
+    navigate('/signin');
+  }
+
+  const handleCloseTooltip = () => {
+    // Éxito: navegación completa del documento (no client-side). Recarga la
+    // página y aterriza directamente en la ruta indicada, con la app limpia.
+    if (tooltip?.redirectTo) {
+      window.location.href = tooltip.redirectTo;
+      return;
+    }
+
+    // Error: se queda donde está; solo se vacía el formulario remontándolo.
+    setTooltip(null);
+    setFormResetKey((key) => key + 1);
+  }
 
   const handleUpdateUser = (data) => {
     api.updateUserInfo(data)
@@ -104,7 +154,7 @@ function App() {
     })
     .catch(console.error);
   }
-  
+
   const handleUpdateAvatar = (data) => {
     api.updateUserAvatar(data)
     .then(userData => {
@@ -113,17 +163,17 @@ function App() {
     })
     .catch(console.error);
   }
-  
+
   const handleCardLike = (card) => {
     const isLiked = card.isLiked;
-    
+
     api.changeLikeCardStatus(card._id, isLiked)
     .then((newCard) => {
       setCards((state) => state.map((currentCard) => currentCard._id === card._id ? newCard : currentCard));
     })
     .catch(console.error);
   }
-  
+
   const handleCardDelete = (card) => {
     api.deleteCard(card._id)
     .then(() => {
@@ -131,7 +181,7 @@ function App() {
     })
     .catch(console.error);
   }
-  
+
   const handleAddCard = (card) => {
     api.addCard(card)
     .then(newCard => {
@@ -140,9 +190,9 @@ function App() {
     })
     .catch(console.error);
   }
-  
+
   const [popup, setPopup] = useState(null);
-  
+
   function handleOpenPopup(popup) {
     setPopup(popup);
   }
@@ -158,7 +208,7 @@ function App() {
   }
 
   return (
-    <LoginContext.Provider value={{isLoggedIn, setIsLoggedIn, handleLogin, handleRegister, userEmail}}>
+    <LoginContext.Provider value={{isLoggedIn, setIsLoggedIn, handleLogin, handleRegister, handleSignOut, userEmail}}>
     <CurrentUserContext.Provider value={{currentUser, handleUpdateUser, handleUpdateAvatar}}>
     <div className="page__content">
       <Header />
@@ -173,15 +223,23 @@ function App() {
         } />
         <Route path="/signin" element={
           <ProtectedRoute anonymous>
-            <Login />
+            <Login key={formResetKey} />
           </ProtectedRoute>
         } />
         <Route path="/signup" element={
           <ProtectedRoute anonymous>
-            <Register />
+            <Register key={formResetKey} />
           </ProtectedRoute>
         } />
+        <Route path="*" element={
+          <Navigate to={isLoggedIn ? "/" : "/signin"} />
+        } />
       </Routes>
+      {tooltip && (
+        <Popup onClose={handleCloseTooltip} variant="tooltip">
+          <InfoTooltip isSuccess={tooltip.isSuccess} message={tooltip.message} />
+        </Popup>
+      )}
     </div>
     </CurrentUserContext.Provider>
     </LoginContext.Provider>

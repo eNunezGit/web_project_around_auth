@@ -3,8 +3,8 @@ import crossIcon from '../../images/tooltip-cross.svg';
 
 // Popup de contenido: se usa como children de <Popup>, igual que ImagePopup.
 // isSuccess decide el ícono; message es el texto que muestra el llamador
-// (Login/Register conocen el copy correcto para cada caso, Tooltip no lo inventa).
-export default function Tooltip({ isSuccess, message }) {
+// (App conoce el copy correcto para cada caso, InfoTooltip no lo inventa).
+export default function InfoTooltip({ isSuccess, message }) {
   return (
     <div className="tooltip">
       <img

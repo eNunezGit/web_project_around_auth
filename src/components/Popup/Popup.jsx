@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import closeButton from '../../images/close-icon.svg'
 
 // form/tooltip comparten fondo blanco (popup__container); image no.
@@ -12,8 +13,27 @@ const VARIANTS = {
 export default function Popup({ onClose, title, variant = 'form', children }) {
   const { containerClass, wrapContent } = VARIANTS[variant];
 
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [onClose]);
+
+  // Solo cierra si el clic fue en el overlay mismo, no en el contenido.
+  const handleOverlayClick = (event) => {
+    if (event.target === event.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
-    <div className="popup">
+    <div className="popup" onClick={handleOverlayClick}>
       <div className={containerClass}>
         <button
           aria-label="Close modal"

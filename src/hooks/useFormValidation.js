@@ -4,9 +4,12 @@ import { useState, useCallback } from 'react';
 // Validation API nativa (validity.valid / validationMessage / checkValidity)
 // que el input ya expone gracias a required/minLength/maxLength/type, pero
 // en vez de mutar el DOM a mano expone el resultado como estado.
-export function useFormValidation() {
+// initialIsValid: true cuando el formulario arranca precargado con datos que
+// ya son válidos (p. ej. EditProfile con los datos actuales del usuario), para
+// que el botón de enviar no quede deshabilitado hasta tocar un campo.
+export function useFormValidation(initialIsValid = false) {
   const [errors, setErrors] = useState({});
-  const [isValid, setIsValid] = useState(false);
+  const [isValid, setIsValid] = useState(initialIsValid);
 
   // Se cuelga del onChange de cada input.
   const handleValidation = useCallback((event) => {
@@ -23,8 +26,8 @@ export function useFormValidation() {
 
   const resetValidation = useCallback(() => {
     setErrors({});
-    setIsValid(false);
-  }, []);
+    setIsValid(initialIsValid);
+  }, [initialIsValid]);
 
   return { errors, isValid, handleValidation, resetValidation };
 }

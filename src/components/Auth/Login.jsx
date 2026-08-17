@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 
 import Form from "../Form/Form.jsx";
 import FormField from "../Form/FormField.jsx";
-import Popup from "../Popup/Popup.jsx";
-import Tooltip from "../Popup/Tooltip.jsx";
 import { useFormValidation } from "../../hooks/useFormValidation.js";
 import { LoginContext } from "../../contexts/LoginContext.js";
 
@@ -14,9 +12,6 @@ function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  // null = tooltip cerrado, true = autenticación exitosa, false = falló
-  const [authStatus, setAuthStatus] = useState(null);
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -31,9 +26,7 @@ function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    handleLogin({ email, password })
-      .then(() => setAuthStatus(true))
-      .catch(() => setAuthStatus(false));
+    handleLogin({ email, password });
   }
 
   return (
@@ -71,18 +64,6 @@ function Login() {
         ¿Aún no eres miembro?{" "}
         <Link to="/signup">Regístrate aquí</Link>
       </p>
-      {authStatus !== null && (
-        <Popup onClose={() => setAuthStatus(null)} variant="tooltip">
-          <Tooltip
-            isSuccess={authStatus}
-            message={
-              authStatus
-                ? "¡Inicio de sesión exitoso!"
-                : "Correo o contraseña incorrectos. Inténtalo de nuevo."
-            }
-          />
-        </Popup>
-      )}
     </div>
     );
 }

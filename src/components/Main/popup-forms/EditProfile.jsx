@@ -7,10 +7,12 @@ import { useFormValidation } from '../../../hooks/useFormValidation.js';
 export default function EditProfile() {
   const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
 
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  // El popup se monta de cero cada vez que se abre, así que el estado inicial
+  // ya trae los datos actuales del usuario sin necesidad de un efecto.
+  const [name, setName] = useState(currentUser.name);
+  const [description, setDescription] = useState(currentUser.about);
 
-  const { errors, isValid, handleValidation } = useFormValidation();
+  const { errors, isValid, handleValidation } = useFormValidation(true);
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -48,7 +50,6 @@ export default function EditProfile() {
         name="user-name"
         maxLength="40"
         minLength="2"
-        placeholder={currentUser.name}
         required
         type="text"
         value={name}
@@ -63,7 +64,6 @@ export default function EditProfile() {
         name="user-info"
         maxLength="200"
         minLength="2"
-        placeholder={currentUser.about}
         required
         type="text"
         value={description}
