@@ -7,7 +7,8 @@
     "dev": "vite --open",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "npm run build && scp -r ./dist/* enrique.nunez.atiaga@enrique-tripleten-demo.chickenkiller.com:/home/enrique.nunez.atiaga/web_project_around_frontend"
   },
   "dependencies": {
     "react": "^19.2.6",
